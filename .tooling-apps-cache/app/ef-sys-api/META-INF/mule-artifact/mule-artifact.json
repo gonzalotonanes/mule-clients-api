@@ -1,0 +1,42 @@
+{
+  "configs": [
+    "global-config.xml",
+    "getById-client-db.xml",
+    "delete-client-db.xml",
+    "client-systems-api.xml",
+    "get-client-db.xml",
+    "post-client-db.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:ef-sys-api:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.3.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "api/client-tf-gonza.raml",
+        "api/Data-Type/Client.raml",
+        "api/Data-Type/ClientNoID.raml",
+        "api/Examples/client.raml",
+        "api/Examples/ClientList.raml",
+        "api/Examples/NewClient.raml",
+        "application-types.xml",
+        "client-systems-api.xml",
+        "delete-client-db.xml",
+        "get-client-db.xml",
+        "getById-client-db.xml",
+        "global-config.xml",
+        "log4j2.xml",
+        "post-client-db.xml",
+        "properties.yaml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

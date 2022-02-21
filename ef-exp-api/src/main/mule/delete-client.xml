@@ -6,20 +6,6 @@
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
 	<flow name="delete:\clients\(id):client-tf-gonza-config">
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
-            <ee:variables>
-                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
-            </ee:variables>
-        </ee:transform>
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-payload]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-		<logger level="INFO" doc:name="Logger" doc:id="18682414-a4fb-464b-9945-e72b0308726d" message='#["ID EN EXPERIENCE" ++ attributes.uriParams.id]'/>
 		<http:request method="DELETE" doc:name="Request" doc:id="7618ce68-022c-47b0-b3a2-cac0f68c04c9" config-ref="HTTP_Request_configuration" path="/clients/{id}">
 			<http:uri-params ><![CDATA[#[{
 	id : attributes.uriParams.id

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="c1b09239-ca9c-48cd-8924-83624dd1db9a" basePath="/api" >
+		<http:request-connection host="0.0.0.0" port="8082" />
+	</http:request-config>
+	<flow name="get:\clients:client-tf-gonza-config">
+        <logger level="INFO" doc:name="Logger" doc:id="92723480-9107-4b4c-8120-53ef523e863a" message="FUNCIONA"/>
+		<choice doc:name="Choice" doc:id="f74ca2c3-36f6-4632-89a7-f19d21e1a73c" >
+			<when expression="#[attributes.queryParams.state != null]">
+				<http:request method="GET" doc:name="Request" doc:id="c2178644-a8a5-43c8-9752-3a06d0e374f1" config-ref="HTTP_Request_configuration" path="/clients">
+					<http:query-params ><![CDATA[#[{
+	state : attributes.queryParams.state
+}]]]></http:query-params>
+				</http:request>
+			</when>
+			<otherwise >
+				<http:request method="GET" doc:name="Request" doc:id="6c046c6e-a5ec-4667-b5ce-b782907f0af5" config-ref="HTTP_Request_configuration" path="/clients">
+		</http:request>
+			</otherwise>
+		</choice>
+    
+</flow>
+</mule>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;ef-sys-api/src/main/mule/client-tf-gonza.xml&apos; to &apos;client-systems-api.xml&apos;" description="Rename resource &apos;client-tf-gonza.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/mule/client-tf-gonza.xml" name="client-systems-api.xml" stamp="1645406206208" updateReferences="true"/>
+</session>

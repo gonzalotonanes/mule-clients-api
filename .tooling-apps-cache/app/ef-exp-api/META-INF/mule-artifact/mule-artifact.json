@@ -1,0 +1,38 @@
+{
+  "configs": [
+    "delete-client.xml",
+    "geyById-client.xml",
+    "client-exp-api.xml",
+    "post-client.xml",
+    "get-client.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:ef-exp-api:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.3.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "api/client-tf-gonza.raml",
+        "api/Data-Type/Client.raml",
+        "api/Data-Type/ClientNoID.raml",
+        "api/Examples/client.raml",
+        "api/Examples/ClientList.raml",
+        "api/Examples/NewClient.raml",
+        "client-exp-api.xml",
+        "delete-client.xml",
+        "get-client.xml",
+        "geyById-client.xml",
+        "log4j2.xml",
+        "post-client.xml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

@@ -1,0 +1,104 @@
+#%RAML 1.0
+title: Client-TF-Gonza
+
+
+types:
+  Client : !include Data-Type/Client.raml
+  ClientNoID : !include Data-Type/ClientNoID.raml
+
+/clients:
+  get:
+    displayName: Get all clients
+    queryParameters:
+      state:
+        type: string
+        required: false
+        enum:
+          - activo
+          - inactivo
+    responses:
+      200:
+        body:
+          application/json:
+              type: Client[]
+              example: !include Examples/ClientList.raml
+      400:
+        body:
+          application/json:
+            example:
+              {
+                "message": "Bad Request"
+              }
+      500:
+        body:
+          application/json:
+            example:
+              {
+                "message": "Internal server error"
+              }
+  /{id}:
+    get:
+      displayName: Get client by id
+      description: Get one client filter by id
+      responses:
+        200:
+          body:
+            application/json:
+              type: Client
+              example: !include Examples/client.raml
+        404:
+          body:
+            application/json:
+              example:
+                {
+                  "message": "Not found"
+                }
+        500:
+          body:
+            application/json:
+              example:
+                {
+                  "message": "Internal server error"
+                }
+    delete:
+      displayName: Delete client
+      description: Delete one client by id
+      responses:
+        204:
+          body:
+            application/json:
+              example:
+                {
+                  "message": "client deleted successfully"
+                }
+        404:
+          body:
+            application/json:
+              example:
+                {
+                  "message": "not found"
+                }
+  post:
+    displayName: Add client
+    description: Create a new client
+    body:
+      application/json:
+        type: ClientNoID
+        example : !include Examples/NewClient.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example: 
+              {"
+              Message" : "Client created"
+              }
+      400:
+        body:
+          application/json:
+            example:
+              {
+                "message": "bad request"
+              }
+
+

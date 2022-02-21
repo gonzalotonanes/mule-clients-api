@@ -6,9 +6,7 @@
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
 	<flow name="post:\clients:application\json:client-tf-gonza-config">
-        <logger level="INFO" doc:name="Logger" doc:id="508a4d14-38ac-480a-bb6e-cd8b0559f4e5" message="SYSTEM-API"/>
-		<logger level="INFO" doc:name="Logger" doc:id="6da7385d-58fa-4b79-92de-7fe3b7d50f1d" message="#[payload]"/>
-		<db:insert doc:name="Insert" doc:id="0bac0287-7c1c-4ffc-a95b-24df90895251" config-ref="Database_Config">
+		<db:insert doc:name="Insert a new client" doc:id="0bac0287-7c1c-4ffc-a95b-24df90895251" config-ref="Database_Config">
 			<db:sql ><![CDATA[INSERT INTO client(name, dni, tel, address) VALUES (:name, :dni, :tel, :address)]]></db:sql>
 			<db:input-parameters ><![CDATA[#[{
 	name : payload.name,

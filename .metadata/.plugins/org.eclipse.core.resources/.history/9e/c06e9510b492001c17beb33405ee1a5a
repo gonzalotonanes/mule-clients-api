@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+	<flow name="get:\clients:client-tf-gonza-config">
+        <logger level="INFO" doc:name="Logger" doc:id="ba2acb49-c07d-4a47-bef7-7ca45585235b" message="DB"/>
+		<set-variable value="#[attributes.queryParams.state]" doc:name="Set Variable" doc:id="09182d8e-bc39-4ea7-abd7-d8d64548e920" variableName="state"/>
+		<choice doc:name="Choice" doc:id="99f37226-e4d1-4930-a243-0f3d0a5379a7" >
+			<when expression="#[attributes.queryParams.state != null]">
+				<flow-ref doc:name="Flow Reference" doc:id="015a08dc-d0a3-4b81-9159-7720b4214d9b" name="get-client-dbFlow" targetValue="#[vars]"/>
+			</when>
+			<otherwise>
+				<flow-ref doc:name="Flow Reference" doc:id="4bde3798-884a-4b00-b4fb-d6895e8917fc" name="get-all-clients"/>
+			</otherwise>
+		</choice>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="fad4c01f-2f8a-4ff8-a168-b97aba011432" type="DB:BAD_SQL_SYNTAX, DB:CONNECTIVITY">
+				<ee:transform doc:name="Transform Message" doc:id="58317e2b-e82f-4dcf-876c-d80e97c879ab" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "error en la db"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
+    
+</flow>
+	<flow name="get-all-clients" doc:id="eca92718-424a-4d6a-a75a-752ca6ad4eb3" >
+		<logger level="INFO" doc:name="Logger" doc:id="3f26d3f8-b2bb-4e08-bb94-d9c5fae5d040" message="SELECT NORMAL" />
+		<db:select doc:name="Select all clients" doc:id="3b75febf-b282-4018-a892-d941cb5cf6b3" config-ref="Database_Config">
+			<db:sql><![CDATA[SELECT id, name, dni, address, tel, state FROM client
+]]></db:sql>
+		</db:select>
+		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+	</flow>
+	<flow name="get-client-dbFlow" doc:id="ac5e05e8-f7d3-45a4-b66d-5c84a2de92fc" >
+		<db:select doc:name="Select" doc:id="0b4c16fa-607c-4485-b384-fa3c95fd0b9a" config-ref="Database_Config">
+			<db:sql><![CDATA[SELECT id,name,dni,tel,address,state FROM client WHERE state = :state]]></db:sql>
+					<db:input-parameters><![CDATA[#[{
+	state : vars.state
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="8b857edd-2e37-4a04-9a4f-e3958fa2b02a">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
